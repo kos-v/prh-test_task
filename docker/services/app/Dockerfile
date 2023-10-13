@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
         libxml2-dev \
         g++ \
         locales \
-        locales-all
+        locales-all \
+        supervisor
 
 RUN docker-php-ext-install -j$(nproc) iconv mbstring pdo pdo_mysql mysqli zip ctype session simplexml opcache \
         && docker-php-ext-configure intl \
@@ -36,7 +37,8 @@ RUN curl -sS https://getcomposer.org/installer \
             | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY php.ini /usr/local/etc/php/php.ini
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /project
 
-CMD ["php-fpm"]
+CMD ["supervisord"]
