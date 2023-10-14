@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace common\tests\unit\models;
+namespace backend\tests\unit\models;
 
+use backend\forms\LoginForm;
 use common\fixtures\UserFixture;
-use common\models\LoginForm;
 use Yii;
 
 /**
