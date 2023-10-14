@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Here you can initialize variables via \Codeception\Util\Fixtures class
  * to store data in global array and use it in Cests.

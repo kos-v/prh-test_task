@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace backend\tests;
 
 /**
@@ -20,7 +22,7 @@ namespace backend\tests;
 class FunctionalTester extends \Codeception\Actor
 {
     use _generated\FunctionalTesterActions;
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 }

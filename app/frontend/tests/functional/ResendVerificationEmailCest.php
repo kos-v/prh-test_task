@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\tests\functional;
 
 use common\fixtures\UserFixture;

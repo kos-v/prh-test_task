@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * The manifest of files that are local to specific environment.
  * This file returns a list of environments that the application

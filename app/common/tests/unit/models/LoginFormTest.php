@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace common\tests\unit\models;
 
-use Yii;
-use common\models\LoginForm;
 use common\fixtures\UserFixture;
+use common\models\LoginForm;
+use Yii;
 
 /**
  * Login form test
@@ -49,7 +51,7 @@ class LoginFormTest extends \Codeception\Test\Unit
         ]);
 
         verify($model->login())->false();
-        verify( $model->errors)->arrayHasKey('password');
+        verify($model->errors)->arrayHasKey('password');
         verify(Yii::$app->user->isGuest)->true();
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace common\tests;
 
 /**
@@ -20,7 +22,7 @@ namespace common\tests;
 class UnitTester extends \Codeception\Actor
 {
     use _generated\UnitTesterActions;
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 }

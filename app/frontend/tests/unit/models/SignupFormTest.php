@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\tests\unit\models;
 
 use common\fixtures\UserFixture;
 use frontend\models\SignupForm;
+use Yii;
 
 class SignupFormTest extends \Codeception\Test\Unit
 {
@@ -47,8 +50,8 @@ class SignupFormTest extends \Codeception\Test\Unit
 
         verify($mail)->instanceOf('yii\mail\MessageInterface');
         verify($mail->getTo())->arrayHasKey('some_email@example.com');
-        verify($mail->getFrom())->arrayHasKey(\Yii::$app->params['supportEmail']);
-        verify($mail->getSubject())->equals('Account registration at ' . \Yii::$app->name);
+        verify($mail->getFrom())->arrayHasKey(Yii::$app->params['supportEmail']);
+        verify($mail->getSubject())->equals('Account registration at ' . Yii::$app->name);
         verify($mail->toString())->stringContainsString($user->verification_token);
     }
 

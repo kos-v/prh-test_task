@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\tests\unit\models;
 
 use frontend\models\ContactForm;

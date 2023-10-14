@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace frontend\tests\functional;
 
 use frontend\tests\FunctionalTester;
@@ -28,7 +30,8 @@ class SignupCest
     public function signupWithWrongEmail(FunctionalTester $I)
     {
         $I->submitForm(
-            $this->formId, [
+            $this->formId,
+            [
             'SignupForm[username]'  => 'tester',
             'SignupForm[email]'     => 'ttttt',
             'SignupForm[password]'  => 'tester_password',
