@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace backend\controllers;
 
 use backend\repositories\AppleRepository;
+use backend\services\AppleService;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\Response;
 
 class AppleController extends Controller
 {
@@ -25,6 +28,12 @@ class AppleController extends Controller
                     ],
                 ],
             ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'regenerate' => ['post'],
+                ],
+            ],
         ];
     }
 
@@ -33,5 +42,12 @@ class AppleController extends Controller
         return $this->render('index', [
             'dataProvider' => $repository->findAllThroughDataProvider()
         ]);
+    }
+
+    public function actionRegenerate(AppleService $appleService): Response
+    {
+        $appleService->regenerateAllByRandomQty();
+
+        return $this->redirect('index');
     }
 }

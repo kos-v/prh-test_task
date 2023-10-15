@@ -23,4 +23,5 @@ return [
     'Germination datetime' => 'Дата прорастания',
     'Integrity' => 'Целостность',
     'State' => 'Состояние',
+    'Regenerate' => 'Регенерировать',
 ];

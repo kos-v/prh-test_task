@@ -13,6 +13,17 @@ $this->title = Yii::t('app/apples', 'Apples');
 <div class="apple-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+        <?= Html::a(
+            Yii::t('app/apples', 'Regenerate'),
+            ['/apple/regenerate'],
+            [
+                'data' => ['method' => 'post'],
+                'class' => 'btn btn-info btn-sm',
+            ]
+        ) ?>
+    </p>
+
     <?= GridView::widget(config: [
         'dataProvider' => $dataProvider,
         'columns' => [
