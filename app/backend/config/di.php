@@ -1,8 +1,10 @@
 <?php
 
+use backend\repositories\AppleRepository;
 use backend\repositories\UserRepository;
+
 use backend\services\AuthService;
-use Yii;
+
 use yii\di\Container;
 
 return [
@@ -15,6 +17,11 @@ return [
                 Yii::$app->user,
                 Yii::$app->params['authRememberMeTimeLen']
             );
-        }
+        },
+
+        // Repositories
+        AppleRepository::class => function (Container $container) {
+            return new AppleRepository(Yii::$app->db);
+        },
     ],
 ];
