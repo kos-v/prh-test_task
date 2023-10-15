@@ -22,6 +22,7 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'loginUrl' => '/auth/login',
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -47,4 +48,5 @@ return [
         ],
     ],
     'params' => $params,
+    'container' => require __DIR__ . '/di.php',
 ];
