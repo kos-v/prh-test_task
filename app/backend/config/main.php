@@ -48,6 +48,14 @@ return [
             'rules' => [
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@backend/messages',
+                ],
+            ],
+        ],
     ],
     'params' => $params,
     'container' => require __DIR__ . '/di.php',
