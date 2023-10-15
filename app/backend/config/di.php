@@ -37,5 +37,8 @@ return [
         AppleRepository::class => function (Container $container) {
             return new AppleRepository(Yii::$app->db);
         },
+        UserRepository::class => function (Container $container) {
+            return new UserRepository(Yii::$app->db);
+        },
     ],
 ];
