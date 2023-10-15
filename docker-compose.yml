@@ -24,7 +24,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - ${STORAGE_ROOT_PATH}/db:/var/lib/mysql
-    command: [ '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    command: [ '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-time-zone=UTC']
     healthcheck:
       test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
       interval: 10s
