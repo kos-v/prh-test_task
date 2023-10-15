@@ -6,9 +6,8 @@ namespace backend\controllers;
 
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\ErrorAction;
 
-class SiteController extends Controller
+class AppleController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -20,24 +19,16 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['error'],
                         'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
             ],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function actions(): array
+    public function actionIndex(): string
     {
-        return [
-            'error' => [
-                'class' => ErrorAction::class,
-                'layout' => 'blank',
-            ],
-        ];
+        return $this->render('index');
     }
 }

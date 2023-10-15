@@ -12,6 +12,7 @@ return [
     'language' => 'ru-RU',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    'homeUrl' => '/apple/index',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
