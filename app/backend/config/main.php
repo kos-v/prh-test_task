@@ -13,6 +13,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'homeUrl' => '/apple/index',
+    'defaultRoute' => '/apple/index',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
