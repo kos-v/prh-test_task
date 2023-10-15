@@ -10,7 +10,8 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('mail')
     ->exclude('runtime')
     ->exclude('views')
-    ->exclude('web');
+    ->exclude('web')
+    ->exclude('messages');
 
 
 $config = new PhpCsFixer\Config();
