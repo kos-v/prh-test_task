@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace backend\services;
 
 use common\models\Apple;
+use common\valueObjects\Percent;
 
 class AppleConditionService
 {
     public function applyGreatCondition(Apple $apple): Apple
     {
-        $apple->integrity = 100;
+        $apple->setIntegrityByPercent(Percent::makeFromFloat(100.0));
         return $apple;
     }
 }

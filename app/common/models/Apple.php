@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace common\models;
 
+use common\valueObjects\Percent;
 use yii\db\ActiveRecord;
 
 /**
@@ -35,5 +36,15 @@ class Apple extends ActiveRecord
             [['color'], 'string', 'max' => 7],
             [['state'], 'string', 'max' => 255],
         ];
+    }
+
+    public function getIntegrityAsPercent(): Percent
+    {
+        return new Percent($this->integrity ?? 0);
+    }
+
+    public function setIntegrityByPercent(Percent $percent): void
+    {
+        $this->integrity = $percent->toBankingFormat();
     }
 }
