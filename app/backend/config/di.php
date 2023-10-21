@@ -32,6 +32,9 @@ return [
                 $container->get(AppleRepository::class),
             );
         },
+        AppleWorkflowService::class => function (Container $container) {
+            return new AppleWorkflowService($container->get(AppleRepository::class));
+        },
 
         // Repositories
         AppleRepository::class => function (Container $container) {

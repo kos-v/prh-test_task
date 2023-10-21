@@ -37,7 +37,7 @@ class AppleService
             $apple = $this->appleDnaService->programGenes(new Apple());
             $apple = $this->appleGerminationService->germinate($apple);
             $apple = $this->appleConditionService->applyGreatCondition($apple);
-            $apple = $this->appleWorkflowService->doInit($apple);
+            $apple = $this->appleWorkflowService->init($apple);
 
             yield $apple;
         }

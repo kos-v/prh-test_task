@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace common\models;
 
 use common\valueObjects\Percent;
+use Finite\StatefulInterface;
 use yii\db\ActiveRecord;
 
 /**
@@ -15,7 +16,7 @@ use yii\db\ActiveRecord;
  * @property int $integrity
  * @property string $state
  */
-class Apple extends ActiveRecord
+class Apple extends ActiveRecord implements StatefulInterface
 {
     /**
      * {@inheritdoc}
@@ -46,5 +47,21 @@ class Apple extends ActiveRecord
     public function setIntegrityByPercent(Percent $percent): void
     {
         $this->integrity = $percent->toBankingFormat();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFiniteState($state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFiniteState(): string
+    {
+        return $this->state;
     }
 }

@@ -58,12 +58,29 @@ class AppleRepository
         }
     }
 
+    public function remove(Apple $apple): int
+    {
+        return $this->db
+            ->createCommand()
+            ->delete(Apple::tableName(), ['id' => $apple->id])
+            ->execute();
+    }
+
     public function removeAllWithSaveKeyIndex(): int
     {
         return $this->db
             ->createCommand()
             ->delete(Apple::tableName())
             ->execute();
+    }
+
+    /**
+     * TODO: Saving must be performed via an inversion instance of database connection.
+     *       I didn't have time to implement its.
+     */
+    public function save(Apple $apple): void
+    {
+        $apple->save();
     }
 
     private function insertBatch(array $appleBatch): void
