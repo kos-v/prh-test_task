@@ -88,3 +88,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.action-group__item-wrap {
+    margin-bottom: 5px;
+}
+
+.action-group__item-wrap .btn.disabled {
+    opacity: 0.30;
+}
+
+.w-15 {
+    width: 15% !important;
+}

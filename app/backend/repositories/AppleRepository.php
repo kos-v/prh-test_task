@@ -39,6 +39,14 @@ class AppleRepository
         ]);
     }
 
+    public function findOneById(int $id): ?Apple
+    {
+        /** @var Apple|null $apple */
+        $apple = Apple::find()->andWhere(['id' => $id])->one($this->db);
+
+        return $apple;
+    }
+
     public function createList(iterable $apples): void
     {
         $appleBatch = [];
