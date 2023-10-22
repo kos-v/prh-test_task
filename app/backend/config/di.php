@@ -37,10 +37,10 @@ return [
         },
 
         // Repositories
-        AppleRepository::class => function (Container $container) {
+        AppleRepository::class => function () {
             return new AppleRepository(Yii::$app->db);
         },
-        UserRepository::class => function (Container $container) {
+        UserRepository::class => function () {
             return new UserRepository(Yii::$app->db);
         },
     ],
