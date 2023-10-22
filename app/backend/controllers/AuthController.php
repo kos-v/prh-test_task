@@ -6,6 +6,7 @@ namespace backend\controllers;
 
 use backend\forms\LoginForm;
 use common\services\AuthService;
+use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -64,7 +65,7 @@ class AuthController extends Controller
                 return $this->goBack();
             }
 
-            $form->addError('username', 'Incorrect username or password.');
+            $form->addError('username', Yii::t('app/auth', 'Incorrect username or password.'));
         }
 
         $form->password = '';
