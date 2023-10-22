@@ -6,7 +6,7 @@ namespace backend\controllers;
 
 use backend\forms\EatForm;
 use backend\repositories\AppleRepository;
-use backend\services\AppleService;
+use backend\services\AppleGenerateService;
 use backend\services\AppleWorkflowService;
 use common\models\Apple;
 use common\valueObjects\Percent;
@@ -111,9 +111,9 @@ class AppleController extends Controller
         ]);
     }
 
-    public function actionRegenerate(AppleService $appleService): Response
+    public function actionRegenerate(AppleGenerateService $appleGenerateService): Response
     {
-        $appleService->regenerateAllByRandomQty();
+        $appleGenerateService->regenerateAllByRandomQty();
 
         return $this->redirect('index');
     }

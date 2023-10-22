@@ -7,7 +7,7 @@ use backend\services\AppleDnaService;
 use backend\services\AppleGerminationService;
 use backend\services\AppleConditionService;
 use backend\services\AppleWorkflowService;
-use backend\services\AppleService;
+use backend\services\AppleGenerateService;
 use backend\services\AuthService;
 
 use yii\di\Container;
@@ -23,8 +23,8 @@ return [
                 Yii::$app->params['authRememberMeTimeLen']
             );
         },
-        AppleService::class => function (Container $container) {
-            return new AppleService(
+        AppleGenerateService::class => function (Container $container) {
+            return new AppleGenerateService(
                 $container->get(AppleDnaService::class),
                 $container->get(AppleGerminationService::class),
                 $container->get(AppleConditionService::class),

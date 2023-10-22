@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 use function mt_rand;
 
-class AppleService
+class AppleGenerateService
 {
     public function __construct(
         private readonly AppleDnaService $appleDnaService,
