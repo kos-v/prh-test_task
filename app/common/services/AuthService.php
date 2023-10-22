@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace backend\services;
+namespace common\services;
 
-use backend\repositories\UserRepository;
+use common\repositories\UserRepository;
 use yii\base\Security as SecurityComponent;
 use yii\web\User as UserComponent;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace backend\repositories;
+namespace common\repositories;
 
 use common\models\User;
 use yii\db\Connection;

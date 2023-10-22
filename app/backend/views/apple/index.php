@@ -7,7 +7,7 @@ use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
 
-/** @var backend\services\AppleWorkflowService $appleWorkflowService */
+/** @var common\services\AppleWorkflowService $appleWorkflowService */
 /** @var yii\web\View $this */
 /** @var yii\data\BaseDataProvider $dataProvider */
 

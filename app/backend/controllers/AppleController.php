@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace backend\controllers;
 
 use backend\forms\EatForm;
-use backend\repositories\AppleRepository;
-use backend\services\AppleGenerateService;
-use backend\services\AppleWorkflowService;
 use common\models\Apple;
+use common\repositories\AppleRepository;
+use common\services\AppleGenerateService;
+use common\services\AppleWorkflowService;
 use common\valueObjects\Percent;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

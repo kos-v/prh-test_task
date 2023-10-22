@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace backend\controllers;
 
 use backend\forms\LoginForm;
-use backend\services\AuthService;
+use common\services\AuthService;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

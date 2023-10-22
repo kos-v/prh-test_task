@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace backend\repositories;
+namespace common\repositories;
 
 use common\models\Apple;
 use yii\data\ActiveDataProvider;

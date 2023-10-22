@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace backend\services;
+namespace common\services;
 
-use backend\repositories\AppleRepository;
 use common\models\Apple;
+use common\repositories\AppleRepository;
 use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace backend\services;
+namespace common\services;
 
 use common\models\Apple;
 use common\valueObjects\Percent;

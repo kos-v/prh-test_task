@@ -1,14 +1,14 @@
 <?php
 
-use backend\repositories\AppleRepository;
-use backend\repositories\UserRepository;
+use common\repositories\AppleRepository;
+use common\repositories\UserRepository;
 
-use backend\services\AppleDnaService;
-use backend\services\AppleGerminationService;
-use backend\services\AppleConditionService;
-use backend\services\AppleWorkflowService;
-use backend\services\AppleGenerateService;
-use backend\services\AuthService;
+use common\services\AppleConditionService;
+use common\services\AppleDnaService;
+use common\services\AppleGenerateService;
+use common\services\AppleGerminationService;
+use common\services\AppleWorkflowService;
+use common\services\AuthService;
 
 use yii\di\Container;
 
