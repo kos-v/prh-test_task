@@ -33,7 +33,10 @@ return [
             );
         },
         AppleWorkflowService::class => function (Container $container) {
-            return new AppleWorkflowService($container->get(AppleRepository::class));
+            return new AppleWorkflowService(
+                $container->get(AppleRepository::class),
+                Yii::$app->params['apple.freshnessTime'],
+            );
         },
 
         // Repositories

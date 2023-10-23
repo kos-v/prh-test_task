@@ -31,8 +31,10 @@ class AppleWorkflowService
     private const TR_SPOIL = 'spoil';
     private const TR_DELETE = 'delete';
 
-    public function __construct(private readonly AppleRepository $appleRepository)
-    {
+    public function __construct(
+        private readonly AppleRepository $appleRepository,
+        private readonly int $appleFreshnessTime,
+    ) {
     }
 
     public function canInit(Apple $apple): bool
@@ -219,7 +221,7 @@ class AppleWorkflowService
 
     public function onTestSpoil(Apple $apple, TransitionEvent $event): void
     {
-        if (time() < $apple->fell_datetime + 3600 * 10) {
+        if (time() < $apple->fell_datetime + $this->appleFreshnessTime) {
             $event->reject();
         }
     }

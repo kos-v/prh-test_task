@@ -17,3 +17,8 @@
 
 ### Аутентификация
 Если фикстуры загружены, то залогиниться можно по кредам: **admin/admin**
+
+### FAQ
+
+**Q.** Как уменьшить время свежести яблок?  
+**A.** Предопределить параметр `apple.freshnessTime` в `backend/config/params-local.php` (См. `backend/config/params.php`).  
