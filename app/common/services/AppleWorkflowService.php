@@ -18,6 +18,7 @@ use Finite\Transition\Transition;
 use LogicException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function func_get_args;
 use function time;
 
 class AppleWorkflowService
@@ -120,6 +121,57 @@ class AppleWorkflowService
         $this->appleRepository->save($apple);
     }
 
+    private function defineStateMachineHandlers(StateMachineInterface $sm): StateMachineInterface
+    {
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::POST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_FALL_TO_GROUND])
+                ->setCallable(fn () => $this->onFallToGround(...func_get_args()))
+                ->getCallback()
+        );
+
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::TEST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_EAT])
+                ->setCallable(fn () => $this->onTestEat(...func_get_args()))
+                ->getCallback()
+        );
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::POST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_EAT])
+                ->setCallable(fn () => $this->onEat(...func_get_args()))
+                ->getCallback()
+        );
+
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::TEST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_SPOIL])
+                ->setCallable(fn () => $this->onTestSpoil(...func_get_args()))
+                ->getCallback()
+        );
+
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::TEST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_DELETE])
+                ->setCallable(fn () => $this->onTestDelete(...func_get_args()))
+                ->getCallback()
+        );
+        $sm->getDispatcher()->addListener(
+            FiniteEvents::POST_TRANSITION,
+            CallbackBuilder::create($sm)
+                ->setOn([self::TR_DELETE])
+                ->setCallable(fn () => $this->onDelete(...func_get_args()))
+                ->getCallback()
+        );
+
+        return $sm;
+    }
+
     private function getStateMachine(Apple $apple): StateMachineInterface
     {
         $sm = new StateMachine($apple);
@@ -154,91 +206,45 @@ class AppleWorkflowService
             self::STATE_EATEN
         ));
 
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::POST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_FALL_TO_GROUND])
-                ->setCallable([$this, 'onFallToGround'])
-                ->getCallback()
-        );
-
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::TEST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_EAT])
-                ->setCallable([$this, 'onTestEat'])
-                ->getCallback()
-        );
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::POST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_EAT])
-                ->setCallable([$this, 'onEat'])
-                ->getCallback()
-        );
-
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::TEST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_SPOIL])
-                ->setCallable([$this, 'onTestSpoil'])
-                ->getCallback()
-        );
-
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::TEST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_DELETE])
-                ->setCallable([$this, 'onTestDelete'])
-                ->getCallback()
-        );
-        $sm->getDispatcher()->addListener(
-            FiniteEvents::POST_TRANSITION,
-            CallbackBuilder::create($sm)
-                ->setOn([self::TR_DELETE])
-                ->setCallable([$this, 'onDelete'])
-                ->getCallback()
-        );
-
-        $sm->initialize();
+        $this->defineStateMachineHandlers($sm)->initialize();
 
         return $sm;
     }
 
-    public function onFallToGround(Apple $apple): void
+    private function onFallToGround(Apple $apple): void
     {
         $apple->fell_datetime = time();
         $this->appleRepository->save($apple);
     }
 
-    public function onTestEat(Apple $apple, TransitionEvent $event): void
+    private function onTestEat(Apple $apple, TransitionEvent $event): void
     {
         if ($this->canSpoil($apple) || $apple->integrity - $event->getProperties()['pieceSize'] < 0) {
             $event->reject();
         }
     }
 
-    public function onEat(Apple $apple, TransitionEvent $event): void
+    private function onEat(Apple $apple, TransitionEvent $event): void
     {
         $apple->integrity -= $event->getProperties()['pieceSize'];
         $this->appleRepository->save($apple);
     }
 
-    public function onTestSpoil(Apple $apple, TransitionEvent $event): void
+    private function onTestSpoil(Apple $apple, TransitionEvent $event): void
     {
         if (time() < $apple->fell_datetime + $this->appleFreshnessTime) {
             $event->reject();
         }
     }
 
-    public function onTestDelete(Apple $apple, TransitionEvent $event): void
+    private function onTestDelete(Apple $apple, TransitionEvent $event): void
     {
         if ($apple->integrity !== 0) {
             $event->reject();
         }
     }
 
-    public function onDelete(Apple $apple): void
+    private function onDelete(Apple $apple): void
     {
         $this->appleRepository->remove($apple);
     }
