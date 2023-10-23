@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Apple;
+use common\valueObjects\Percent;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\grid\SerialColumn;
@@ -88,7 +89,7 @@ $this->title = Yii::t('app/apples', 'Apples');
                         ), ['class' => 'action-group__item-wrap']);
                     },
                     'eat' => function (string $url, Apple $apple) use ($appleWorkflowService): string {
-                        $isDisabled = !$appleWorkflowService->canEat($apple, 1);
+                        $isDisabled = !$appleWorkflowService->canEat($apple, Percent::makeFromFloat(0.01));
 
                         return Html::tag('div', $this->render('@backend/views/apple/_eat_form', [
                             'apple' => $apple,

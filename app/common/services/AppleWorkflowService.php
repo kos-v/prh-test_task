@@ -6,6 +6,7 @@ namespace common\services;
 
 use common\models\Apple;
 use common\repositories\AppleRepository;
+use common\valueObjects\Percent;
 use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;
@@ -67,18 +68,22 @@ class AppleWorkflowService
         $this->applyTransition(self::TR_FALL_TO_GROUND, $apple);
     }
 
-    public function canEat(Apple $apple, int $pieceSize): bool
+    public function canEat(Apple $apple, Percent $pieceSize): bool
     {
-        return $this->getStateMachine($apple)->can(self::TR_EAT, ['pieceSize' => $pieceSize]);
+        return $this->getStateMachine($apple)->can(self::TR_EAT, [
+            'pieceSize' => $pieceSize->toBankingFormat()
+        ]);
     }
 
-    public function eat(Apple $apple, int $pieceSize): void
+    public function eat(Apple $apple, Percent $pieceSize): void
     {
         if (!$this->canEat($apple, $pieceSize)) {
             throw new LogicException('The apple cannot be eat');
         }
 
-        $this->applyTransition(self::TR_EAT, $apple, ['pieceSize' => $pieceSize]);
+        $this->applyTransition(self::TR_EAT, $apple, [
+            'pieceSize' => $pieceSize->toBankingFormat()
+        ]);
     }
 
     public function canSpoil(Apple $apple): bool
