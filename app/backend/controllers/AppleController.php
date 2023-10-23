@@ -62,11 +62,11 @@ class AppleController extends Controller
     {
         $apple = $this->getAppleById($id);
 
-        if (!$this->appleWorkflowService->canDelete($apple)) {
+        if ($this->appleWorkflowService->canDelete($apple)) {
+            $this->appleWorkflowService->delete($apple);
+        } else {
             $session->addFlash('error', "Failed to delete apple with id {$apple->id}");
         }
-
-        $this->appleWorkflowService->delete($apple);
 
         return $this->redirect('index');
     }
@@ -94,11 +94,11 @@ class AppleController extends Controller
     {
         $apple = $this->getAppleById($id);
 
-        if (!$this->appleWorkflowService->canFallToGround($apple)) {
+        if ($this->appleWorkflowService->canFallToGround($apple)) {
+            $this->appleWorkflowService->fallToGround($apple);
+        } else {
             $session->addFlash('error', "Failed to fall to ground apple bu id {$apple->id}");
         }
-
-        $this->appleWorkflowService->fallToGround($apple);
 
         return $this->redirect('index');
     }
@@ -122,11 +122,11 @@ class AppleController extends Controller
     {
         $apple = $this->getAppleById($id);
 
-        if (!$this->appleWorkflowService->canSpoil($apple)) {
+        if ($this->appleWorkflowService->canSpoil($apple)) {
+            $this->appleWorkflowService->spoil($apple);
+        } else {
             $session->addFlash('error', "Failed to spoil apple by id {$apple->id}");
         }
-
-        $this->appleWorkflowService->spoil($apple);
 
         return $this->redirect('index');
     }
