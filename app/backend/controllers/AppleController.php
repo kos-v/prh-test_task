@@ -78,11 +78,11 @@ class AppleController extends Controller
         $form = new EatForm();
         if ($form->load($request->post(), '') && $form->validate()) {
             $pieceSize = Percent::makeFromFloat($form->pieceSize);
-            if (!$this->appleWorkflowService->canEat($apple, $pieceSize->toBankingFormat())) {
+            if ($this->appleWorkflowService->canEat($apple, $pieceSize->toBankingFormat())) {
+                $this->appleWorkflowService->eat($apple, $pieceSize->toBankingFormat());
+            } else {
                 $session->addFlash('error', "Failed to eat apple by id {$apple->id}");
             }
-
-            $this->appleWorkflowService->eat($apple, $pieceSize->toBankingFormat());
         } else {
             $session->addFlash('error', "pieceSize: {$form->getFirstError('pieceSize')}");
         }
