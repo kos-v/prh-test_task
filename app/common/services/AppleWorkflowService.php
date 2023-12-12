@@ -74,7 +74,7 @@ class AppleWorkflowService
     public function canEat(Apple $apple, Percent $pieceSize): bool
     {
         return $this->getStateMachine($apple)->can(self::TR_EAT, [
-            'pieceSize' => $pieceSize->toBankingFormat()
+            'pieceSize' => $pieceSize,
         ]);
     }
 
@@ -85,7 +85,7 @@ class AppleWorkflowService
         }
 
         $this->applyTransition(self::TR_EAT, $apple, [
-            'pieceSize' => $pieceSize->toBankingFormat()
+            'pieceSize' => $pieceSize,
         ]);
 
         return $apple;
@@ -199,7 +199,7 @@ class AppleWorkflowService
             null,
             (new OptionsResolver())
                 ->setRequired('pieceSize')
-                ->setAllowedTypes('pieceSize', 'int')
+                ->setAllowedTypes('pieceSize', Percent::class)
         ));
         $sm->addTransition(new Transition(
             self::TR_SPOIL,
@@ -225,14 +225,15 @@ class AppleWorkflowService
 
     private function onTestEat(Apple $apple, TransitionEvent $event): void
     {
-        if ($this->canSpoil($apple) || $apple->integrity - $event->getProperties()['pieceSize'] < 0) {
+        $pieceSize = $event->getProperties()['pieceSize']->toBankingFormat();
+        if ($this->canSpoil($apple) || $apple->integrity - $pieceSize < 0) {
             $event->reject();
         }
     }
 
     private function onEat(Apple $apple, TransitionEvent $event): void
     {
-        $apple->integrity -= $event->getProperties()['pieceSize'];
+        $apple->integrity -= $event->getProperties()['pieceSize']->toBankingFormat();
         $this->appleRepository->save($apple);
     }
 
