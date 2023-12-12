@@ -41,7 +41,7 @@ class AppleWorkflowService
 
     public function canInit(Apple $apple): bool
     {
-        return $apple->getIsNewRecord();
+        return $apple->state === null || $apple->state === '';
     }
 
     public function init(Apple $apple): Apple
