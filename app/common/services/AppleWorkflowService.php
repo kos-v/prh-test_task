@@ -60,13 +60,15 @@ class AppleWorkflowService
         return $this->getStateMachine($apple)->can(self::TR_FALL_TO_GROUND);
     }
 
-    public function fallToGround(Apple $apple): void
+    public function fallToGround(Apple $apple): Apple
     {
         if (!$this->canFallToGround($apple)) {
             throw new LogicException('The apple cannot be falled to the ground');
         }
 
         $this->applyTransition(self::TR_FALL_TO_GROUND, $apple);
+
+        return $apple;
     }
 
     public function canEat(Apple $apple, Percent $pieceSize): bool
@@ -76,7 +78,7 @@ class AppleWorkflowService
         ]);
     }
 
-    public function eat(Apple $apple, Percent $pieceSize): void
+    public function eat(Apple $apple, Percent $pieceSize): Apple
     {
         if (!$this->canEat($apple, $pieceSize)) {
             throw new LogicException('The apple cannot be eat');
@@ -85,6 +87,8 @@ class AppleWorkflowService
         $this->applyTransition(self::TR_EAT, $apple, [
             'pieceSize' => $pieceSize->toBankingFormat()
         ]);
+
+        return $apple;
     }
 
     public function canSpoil(Apple $apple): bool
@@ -92,13 +96,15 @@ class AppleWorkflowService
         return $this->getStateMachine($apple)->can(self::TR_SPOIL);
     }
 
-    public function spoil(Apple $apple): void
+    public function spoil(Apple $apple): Apple
     {
         if (!$this->canSpoil($apple)) {
             throw new LogicException('The apple cannot be spoiled');
         }
 
         $this->applyTransition(self::TR_SPOIL, $apple);
+
+        return $apple;
     }
 
     public function canDelete(Apple $apple): bool
