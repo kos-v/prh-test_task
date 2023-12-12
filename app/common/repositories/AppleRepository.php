@@ -47,25 +47,6 @@ class AppleRepository
         return $apple;
     }
 
-    public function createList(iterable $apples): void
-    {
-        $appleBatch = [];
-        $appleBatchMaxSize = 100;
-
-        foreach ($apples as $apple) {
-            $appleBatch[] = $apple;
-
-            if (count($appleBatch) === $appleBatchMaxSize) {
-                $this->insertBatch($appleBatch);
-                $appleBatch = [];
-            }
-        }
-
-        if (count($appleBatch)) {
-            $this->insertBatch($appleBatch);
-        }
-    }
-
     public function remove(Apple $apple): int
     {
         return $this->db
@@ -89,6 +70,25 @@ class AppleRepository
     public function save(Apple $apple): void
     {
         $apple->save();
+    }
+
+    public function saveList(iterable $apples): void
+    {
+        $appleBatch = [];
+        $appleBatchMaxSize = 100;
+
+        foreach ($apples as $apple) {
+            $appleBatch[] = $apple;
+
+            if (count($appleBatch) === $appleBatchMaxSize) {
+                $this->insertBatch($appleBatch);
+                $appleBatch = [];
+            }
+        }
+
+        if (count($appleBatch)) {
+            $this->insertBatch($appleBatch);
+        }
     }
 
     private function insertBatch(array $appleBatch): void

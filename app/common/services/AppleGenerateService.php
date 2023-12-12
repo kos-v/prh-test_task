@@ -28,7 +28,7 @@ class AppleGenerateService
         }
 
         $this->appleRepository->removeAllWithSaveKeyIndex();
-        $this->appleRepository->createList($this->generateApples(mt_rand($minQty, $maxQty)));
+        $this->appleRepository->saveList($this->generateApples(mt_rand($minQty, $maxQty)));
     }
 
     private function generateApples(int $count): iterable
