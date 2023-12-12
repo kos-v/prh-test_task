@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         $form = new LoginForm();
         if ($form->load($request->post()) && $form->validate()) {
-            $isAuthenticated = $authService->authenticateByLoginAndPassword(
+            $isAuthenticated = $authService->authenticateByLogin(
                 $form->username,
                 $form->password,
                 $form->rememberMe

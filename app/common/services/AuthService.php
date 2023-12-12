@@ -18,7 +18,7 @@ class AuthService
     ) {
     }
 
-    public function authenticateByLoginAndPassword(string $login, string $password, bool $rememberMe): bool
+    public function authenticateByLogin(string $login, string $password, bool $rememberMe): bool
     {
         $user = $this->userRepository->findByUsername($login);
         if (!($user && $this->securityComponent->validatePassword($password, $user->password_hash))) {
