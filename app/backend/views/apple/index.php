@@ -51,14 +51,12 @@ $this->title = Yii::t('app/apples', 'Apples');
             [
                 'attribute' => 'germination_datetime',
                 'label' => Yii::t('app/apples', 'Germination datetime'),
-                'format' => static fn(int $value, Formatter $formatter): string => $formatter->asDatetime($value),
+                'format' => 'datetime',
             ],
             [
                 'attribute' => 'fell_datetime',
                 'label' => Yii::t('app/apples', 'Fell datetime'),
-                'format' => static fn(int|null $value, Formatter $formatter): string => $value !== null
-                    ? $formatter->asDatetime($value)
-                    : $formatter->format($value, 'text')
+                'format' => 'datetime',
             ],
             [
                 'attribute' => 'integrity',
@@ -79,48 +77,68 @@ $this->title = Yii::t('app/apples', 'Apples');
                     'fallToGround' => static function (string $url, Apple $apple) use ($appleWorkflowService): string {
                         $isDisabled = !$appleWorkflowService->canFallToGround($apple);
 
-                        return Html::tag('div', Html::a(
-                            Yii::t('app/apples', 'Drop to ground'),
-                            ['/apple/fall-to-ground', 'id' => $apple->id],
-                            [
-                                'data' => ['method' => 'post'],
-                                'class' => 'btn btn-info btn-sm w-100 ' . ($isDisabled ? 'disabled' : ''),
-                            ]
-                        ), ['class' => 'action-group__item-wrap']);
+                        return Html::tag(
+                            'div',
+                            Html::a(
+                                Yii::t('app/apples', 'Drop to ground'),
+                                ['/apple/fall-to-ground', 'id' => $apple->id],
+                                [
+                                    'data' => ['method' => 'post'],
+                                    'class' => 'btn btn-info btn-sm w-100 ' . ($isDisabled ? 'disabled' : ''),
+                                ]
+                            ),
+                            ['class' => 'action-group__item-wrap']
+                        );
                     },
                     'eat' => function (string $url, Apple $apple) use ($appleWorkflowService): string {
                         $isDisabled = !$appleWorkflowService->canEat($apple, Percent::makeFromFloat(0.01));
 
-                        return Html::tag('div', $this->render('@backend/views/apple/_eat_form', [
-                            'apple' => $apple,
-                            'isDisabled' => $isDisabled,
-                            'minPieceSize' => 0.01,
-                            'maxPieceSize' => $apple->getIntegrityAsPercent()->toFloat(),
-                        ], $this), ['class' => 'action-group__item-wrap']);
+                        return Html::tag(
+                            'div',
+                            $this->render(
+                                '@backend/views/apple/_eat_form',
+                                [
+                                    'apple' => $apple,
+                                    'isDisabled' => $isDisabled,
+                                    'minPieceSize' => 0.01,
+                                    'maxPieceSize' => $apple->getIntegrityAsPercent()->toFloat(),
+                                ],
+                                $this
+                            ),
+                            ['class' => 'action-group__item-wrap']
+                        );
                     },
                     'spoil' => static function (string $url, Apple $apple) use ($appleWorkflowService): string {
                         $isDisabled = !$appleWorkflowService->canSpoil($apple);
 
-                        return Html::tag('div', Html::a(
-                            Yii::t('app/apples', 'To spoiled'),
-                            ['/apple/spoil', 'id' => $apple->id],
-                            [
-                                'data' => ['method' => 'post'],
-                                'class' => 'btn btn-warning btn-sm w-100 ' . ($isDisabled ? 'disabled' : '')
-                            ]
-                        ), ['class' => 'action-group__item-wrap']);
+                        return Html::tag(
+                            'div',
+                            Html::a(
+                                Yii::t('app/apples', 'To spoiled'),
+                                ['/apple/spoil', 'id' => $apple->id],
+                                [
+                                    'data' => ['method' => 'post'],
+                                    'class' => 'btn btn-warning btn-sm w-100 ' . ($isDisabled ? 'disabled' : '')
+                                ]
+                            ),
+                            ['class' => 'action-group__item-wrap']
+                        );
                     },
-                    'delete' => function (string $url, Apple $apple) use ($appleWorkflowService): string {
+                    'delete' => static function (string $url, Apple $apple) use ($appleWorkflowService): string {
                         $isDisabled = !$appleWorkflowService->canDelete($apple);
 
-                        return Html::tag('div', Html::a(
-                            Yii::t('app/apples', 'Delete'),
-                            ['/apple/delete', 'id' => $apple->id],
-                            [
-                                'data' => ['method' => 'delete'],
-                                'class' => 'btn btn-danger btn-sm w-100 ' . ($isDisabled ? 'disabled' : '')
-                            ]
-                        ), ['class' => 'action-group__item-wrap']);
+                        return Html::tag(
+                            'div',
+                            Html::a(
+                                Yii::t('app/apples', 'Delete'),
+                                ['/apple/delete', 'id' => $apple->id],
+                                [
+                                    'data' => ['method' => 'delete'],
+                                    'class' => 'btn btn-danger btn-sm w-100 ' . ($isDisabled ? 'disabled' : '')
+                                ]
+                            ),
+                            ['class' => 'action-group__item-wrap']
+                        );
                     },
                 ],
             ],
