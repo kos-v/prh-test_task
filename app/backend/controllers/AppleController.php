@@ -136,6 +136,6 @@ class AppleController extends Controller
      */
     private function getAppleById(int $id): Apple
     {
-        return $this->appleRepository->findOneById($id) ?? throw new NotFoundHttpException('Apple not found');
+        return $this->appleRepository->findById($id) ?? throw new NotFoundHttpException('Apple not found');
     }
 }

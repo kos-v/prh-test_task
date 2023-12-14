@@ -39,7 +39,7 @@ class AppleRepository
         ]);
     }
 
-    public function findOneById(int $id): ?Apple
+    public function findById(int $id): ?Apple
     {
         /** @var Apple|null $apple */
         $apple = Apple::find()->andWhere(['id' => $id])->one($this->db);
